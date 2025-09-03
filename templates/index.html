@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicles Flow Map</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e0f7fa; /* Light cyan background for a fresh look */
+            margin: 0;
+            padding: 0;
+        }
+        
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 50px;
+            color: #00796b; /* Teal color for the main title */
+        }
+
+        .input-container {
+            margin-bottom: 20px;
+        }
+
+        .flex-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align items to the start */
+            width: 100%;
+        }
+
+        .graph-container {
+            max-width: 800px; /* Set a fixed width for better layout */
+            margin-top: 20px; /* Space above the graph */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow effect */
+            background-color: white; /* White background for contrast */
+        }
+
+        .video-container {
+            max-width: 800px; /* Set a fixed width for better layout */
+            text-align: center;
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow effect */
+            background-color: white; /* White background for contrast */
+        }
+
+        .no-data {
+            color: red;
+        }
+
+        .form-input {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px; /* Space below dropdown */
+        }
+
+        label {
+            font-size: 20px;
+            color: #004d40; /* Darker teal for labels */
+        }
+
+        select {
+            padding: 10px; /* Padding for dropdown */
+            font-size: 16px; /* Font size for dropdown */
+            border-radius: 5px; /* Rounded corners for dropdown */
+            border: 1px solid #00796b; /* Teal border */
+            transition: border-color 0.3s; /* Smooth transition for hover effect */
+        }
+
+        select:hover {
+            border-color: #004d40; /* Darker teal on hover */
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 16px;
+            color: #555555; /* Gray color for footer text */
+        }
+    </style>
+</head>
+<body>
+
+<h1>VEHICLES FLOW MAP</h1>
+
+<div class="main-container">
+   <div class="input-container">
+       <label for="videoSelect">Select Location:</label>
+       <select id="videoSelect" onchange="changeVideo()">
+           <option value="0" {% if video_index == 0 %}selected{% endif %}>Shinjukugado-W, Tokyo, Japan</option>
+           <option value="1" {% if video_index == 1 %}selected{% endif %}>Colorado Mountain College, USA</option>
+           <option value="2" {% if video_index == 2 %}selected{% endif %}>Times Square, New York, USA</option>
+           <option value="3" {% if video_index == 3 %}selected{% endif %}>Roswell, New Mexico, USA</option>
+        
+       </select>
+   </div>
+
+   <div class="video-container">
+       <h3 style="font-size: 30px; color:#00796b;">Live Stream</h3>
+       <img src="{{ url_for('video_feed') }}" width="750" height="560" style="margin-top: -10px;">
+   </div>
+
+   <div class="graph-container">
+       <h2 style="text-align: center; font-size: 30px; color:#00796b;">Choropleth Map</h2>
+       <div>{{ graph_html | safe }}</div>
+   </div>
+</div>
+
+<script>
+function changeVideo() {
+    const select = document.getElementById('videoSelect');
+    const videoIndex = select.value;
+    window.location.href = `{{ url_for('index', video_index='') }}${videoIndex}`;
+}
+</script>
+
+</body>
+</html>

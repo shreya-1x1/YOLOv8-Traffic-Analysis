@@ -1,0 +1,9 @@
+ultralytics
+scikit-learn==1.5.2
+cvzone
+yt-dlp
+flask
+plotly
+pytube
+gunicorn
+opencv-python
